@@ -1,4 +1,6 @@
 const express = require("express");
+const mongoose = require("mongoose");
+
 require("dotenv").config();
 const usersRoutes = require("./routes/users");
 const productsRoutes = require("./routes/products");
@@ -32,6 +34,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(
+    console.log("Connected to MongoDB successfully"),
+    app.listen(port, () => {
+      console.log(`Server is running at http://localhost:${port}`);
+    })
+  )
+
+  .catch((err) => console.log(err));
