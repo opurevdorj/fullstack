@@ -1,0 +1,67 @@
+#container {
+   
+    width: 100vw;
+    height: 100vh;
+
+}
+
+#title {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  font-size: 30px;
+  color: #0bbef2;
+  display: flex;
+  justify-content: center;
+}
+
+#inputContainer {
+  margin-left: 520px;
+  width: 400px;
+  flex-direction: column;
+}
+
+.inputNames {
+  display: flex;
+}
+#signupButton {
+  width: 400px;
+  height: 30px;
+  border-radius: 10px;
+  border: transparent;
+  margin-top: 50px;
+  background-color: #0bbef2;
+  color: white;
+  margin-bottom: 20px;
+
+}
+
+#notification {
+  color: red;
+  font-size: 12px;
+}
+
+#signUpContainer {
+    display: flex;
+    justify-content: center;
+}
+
+#haveAccount {
+  font-size: 15px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.signInandSignUp {
+  border: transparent;
+  color: #0bbef2;
+  background-color: transparent;
+  margin-left: 10px;
+}
+
+.inputs {
+  width: 400px;
+  height: 30px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: transparent;
+}
