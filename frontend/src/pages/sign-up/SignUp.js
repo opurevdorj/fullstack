@@ -2,23 +2,25 @@ import React, { useState } from "react";
 import "./SignUp.css";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const validateForm = yup.object().shape({
-  name: yup
+  fullname: yup
     .string()
     .min(4, "Must be more than 4 characters")
-    .max(10, "Must be less than 10 characters")
     .required(),
   email: yup.string().email("Invalid email address").required(),
-  password: yup.string().min(8, "Must be more than 8 characters").required(),
+  password: yup
+  .string()
+  .required('Please Enter your password')
+  .matches(
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+    "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+  ),
   confirmPassword: yup
     .string()
-    .min(8, "Must be more than 8 characters")
-    .required(),
-  checkbox: yup
-    .boolean()
-    .oneOf([true], "Must agree with terms and conditions")
-    .required(),
+    .required()
+    
 });
 
 export const SignUp = () => {
@@ -28,20 +30,18 @@ export const SignUp = () => {
   };
 
   const [formValues, setFormValues] = useState({
-    name: "",
+    fullname: "",
     password: "",
     confirmPassword: "",
     email: "",
-    checkbox: "",
   });
 
   const [formErrors, setFormErrors] = useState({
-    name: "",
+    fullname: "",
     email: "",
     password: "",
     confirmPassword: "",
     required: "",
-    checkbox: "",
   });
 
   const handleInput = async (e) => {
@@ -62,46 +62,47 @@ export const SignUp = () => {
   };
 
   const handleSignUp = async (e) => {
-    if (formValues.password !== formValues.confirmPassword) {
-      // checks if password matches with confirmPassword
-      setFormErrors({
-        ...formErrors,
-        confirmPassword: "Must match with the password",
-      });
-    } else if (
-      // checks if any inputs are empty
-      formValues.name === "" ||
-      formValues.email === "" ||
-      formValues.password === "" ||
-      formValues.confirmPassword === "" ||
-      formValues.checkbox === false
-    ) {
-      setFormErrors({ ...formErrors, required: "All inputs must be required" });
-    } else if (
-      // checks if there is any errors
-      formErrors.name !== "" ||
-      formErrors.email !== "" ||
-      formErrors.password !== "" ||
-      formErrors.confirmPassword !== "" ||
-      formErrors.checkbox !== ""
-    ) {
-      setFormErrors({ ...formErrors, required: "All error must be cleared" });
-    } else {
-      setFormErrors({ ...formErrors, required: "" })
-        //   await createUserWithEmailAndPassword(
-        //     auth,
-        //     formValues.email,
-        //     formValues.password
-        //   )
-        .then((response) => {
-          console.log(response);
-
-          navigate("/");
-        })
-        .catch((error) => {
-          console.log(error.message);
-          setFormErrors({ ...formErrors, required: error.message });
+    try {
+      if (formValues.password !== formValues.confirmPassword) {
+        // checks if password matches with confirmPassword
+        setFormErrors({
+          ...formErrors,
+          confirmPassword: "Must match with the password",
         });
+      } else if (
+        // checks if any inputs are empty
+        formValues.fullname === "" ||
+        formValues.email === "" ||
+        formValues.password === "" ||
+        formValues.confirmPassword === "" 
+      ) {
+        setFormErrors({
+          ...formErrors,
+          required: "All inputs must be required",
+        });
+      } else if (
+        // checks if there is any errors
+        formErrors.fullname !== "" ||
+        formErrors.email !== "" ||
+        formErrors.password !== "" ||
+        formErrors.confirmPassword !== "" 
+      ) {
+        setFormErrors({ ...formErrors, required: "All error must be cleared" });
+      } else {
+        const response = await axios.post(
+          `http://localhost:8080/users/sign-up`,
+          formValues
+        );
+        const user = await response.data;
+        
+        localStorage.setItem("user", JSON.stringify(user));
+        
+        setFormValues({ fullname: "", email: "", password: "", confirmPassword: "" });
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+      setFormErrors({ ...formErrors, required: error.message });
     }
   };
 
@@ -109,16 +110,16 @@ export const SignUp = () => {
     <div id="container">
       <div id="title">Get Started Now</div>
       <div id="inputContainer">
-        <div className="inputNames">Name</div>
+        <div className="inputNames">Fullname</div>
         <input
           className="inputs"
-          placeholder="Enter your name"
+          placeholder="Enter your fullname"
           onChange={handleInput}
-          value={formValues.name}
-          name="name"
+          value={formValues.fullname}
+          name="fullname"
         />
 
-        <div id="notification">{formErrors.name}</div>
+        <div id="notification">{formErrors.fullname}</div>
 
         <div className="inputNames">Email address</div>
         <input
@@ -152,7 +153,6 @@ export const SignUp = () => {
         <div id="notification">{formErrors.confirmPassword}</div>
       </div>
 
-      <div id="notification">{formErrors.checkbox}</div>
       <div id="notification">{formErrors.required}</div>
       <div id="signUpContainer">
         <button id="signupButton" onClick={handleSignUp}>

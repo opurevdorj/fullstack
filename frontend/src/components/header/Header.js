@@ -6,13 +6,16 @@ export const Header = () => {
   return (
     <div className="Header">
       <div>
-        <Link to="/">Home</Link>
+        <Link className="Menus" to="/">Home</Link>
       </div>
       <div>
-        <Link to="/products">Products</Link>
+        <Link className="Menus" to="/products">Products</Link>
       </div>
       <div>
-        <Link to="/note">Note</Link>
+        <Link className="Menus" to="/note">Note</Link>
+      </div>
+      <div>
+        <Link className="Menus" to="/sign-in">Sign Out</Link>
       </div>
     </div>
   );

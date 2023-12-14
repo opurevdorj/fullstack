@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import "./SignIn.css";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const validateForm = yup.object().shape({
   email: yup.string().email("Invalid email address").required(),
   password: yup.string().required(),
-
-  checkbox: yup.boolean().oneOf([true], "Must check the box").required(),
 });
 
 export const SignIn = () => {
@@ -19,11 +18,9 @@ export const SignIn = () => {
   const [formValues, setFormValues] = useState({
     password: "",
     email: "",
-    checkbox: "",
   });
 
   const [formErrors, setFormErrors] = useState({
-    checkbox: true,
     email: "",
     password: "",
     required: "",
@@ -47,35 +44,40 @@ export const SignIn = () => {
   };
 
   const handleSignIn = async (e) => {
-    if (
-      // checks if any inputs are empty
-      formValues.email === "" ||
-      formValues.password === "" ||
-      formValues.checkbox === false
-    ) {
-      setFormErrors({ ...formErrors, required: "All inputs must be required" });
-    } else if (
-      // checks if there is any errors
-      formErrors.email !== "" ||
-      formErrors.password !== "" ||
-      formErrors.checkbox !== ""
-    ) {
-      setFormErrors({ ...formErrors, required: "All error must be cleared" });
-    } else {
-      setFormErrors({ ...formErrors, required: "" })
-        //   await signInWithEmailAndPassword(
-        //     auth,
-        //     formValues.email,
-        //     formValues.password
-        //   )
-        .then((response) => {
-          console.log(response);
-          navigate("/");
-        })
-        .catch((error) => {
-          console.log(error.message);
-          setFormErrors({ ...formErrors, required: error.message });
+    try {
+      if (
+        // checks if any inputs are empty
+        formValues.email === "" ||
+        formValues.password === ""
+      ) {
+        setFormErrors({
+          ...formErrors,
+          required: "All inputs must be required",
         });
+      } else if (
+        // checks if there is any errors
+        formErrors.email !== "" ||
+        formErrors.password !== ""
+      ) {
+        setFormErrors({ ...formErrors, required: "All error must be cleared" });
+      } else {
+        const response = await axios.post(
+          `http://localhost:8080/users/sign-in`,
+          formValues
+        );
+        const user = await response.data;
+
+        localStorage.setItem("user", JSON.stringify(user));
+
+        setFormValues({
+          email: "",
+          password: "",
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+      setFormErrors({ ...formErrors, required: error.message });
     }
   };
 
@@ -106,7 +108,6 @@ export const SignIn = () => {
         />
         <div id="notification">{formErrors.password}</div>
       </div>
-      <div id="notification">{formErrors.checkbox}</div>
       <div id="notification">{formErrors.required}</div>
       <div id="signUpContainer">
         <button id="signupButton" onClick={handleSignIn}>
