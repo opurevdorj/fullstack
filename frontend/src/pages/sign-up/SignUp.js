@@ -5,22 +5,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const validateForm = yup.object().shape({
-  fullname: yup
-    .string()
-    .min(4, "Must be more than 4 characters")
-    .required(),
+  fullname: yup.string().min(4, "Must be more than 4 characters").required(),
   email: yup.string().email("Invalid email address").required(),
   password: yup
-  .string()
-  .required('Please Enter your password')
-  .matches(
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-    "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-  ),
-  confirmPassword: yup
     .string()
-    .required()
-    
+    .required("Please Enter your password")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+    ),
+  confirmPassword: yup.string().required(),
 });
 
 export const SignUp = () => {
@@ -74,7 +68,7 @@ export const SignUp = () => {
         formValues.fullname === "" ||
         formValues.email === "" ||
         formValues.password === "" ||
-        formValues.confirmPassword === "" 
+        formValues.confirmPassword === ""
       ) {
         setFormErrors({
           ...formErrors,
@@ -85,7 +79,7 @@ export const SignUp = () => {
         formErrors.fullname !== "" ||
         formErrors.email !== "" ||
         formErrors.password !== "" ||
-        formErrors.confirmPassword !== "" 
+        formErrors.confirmPassword !== ""
       ) {
         setFormErrors({ ...formErrors, required: "All error must be cleared" });
       } else {
@@ -93,11 +87,16 @@ export const SignUp = () => {
           `http://localhost:8080/users/sign-up`,
           formValues
         );
-        const user = await response.data;
-        
-        localStorage.setItem("user", JSON.stringify(user));
-        
-        setFormValues({ fullname: "", email: "", password: "", confirmPassword: "" });
+        const data = await response.data;
+
+        localStorage.setItem("user", JSON.stringify(data));
+        setFormValues(data);
+        setFormValues({
+          fullname: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
         navigate("/");
       }
     } catch (error) {

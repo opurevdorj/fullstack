@@ -65,10 +65,10 @@ export const SignIn = () => {
           `http://localhost:8080/users/sign-in`,
           formValues
         );
-        const user = await response.data;
+        const data = await response.data;
 
-        localStorage.setItem("user", JSON.stringify(user));
-
+        localStorage.setItem("user", JSON.stringify(data));
+        setFormValues(data);
         setFormValues({
           email: "",
           password: "",
