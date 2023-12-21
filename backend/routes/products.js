@@ -1,5 +1,5 @@
 const express = require("express");
-
+const auth = require("../middleware/auth");
 const router = express.Router();
 const {
   createProduct,
@@ -8,6 +8,9 @@ const {
   updateProduct,
   deleteProduct,
 } = require("../controllers/product");
+
+//Auth token
+router.use(auth);
 
 // GET /products => get all products
 

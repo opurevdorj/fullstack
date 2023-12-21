@@ -2,25 +2,32 @@ import React from "react";
 import { Modal } from "../../components/modal";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
+import { useUserContext } from "../../context/UserContext";
 
 export const DeleteProductModal = (props) => {
-    const { openDelete, handleCloseDelete, product } = props;
-    const {id} = useParams()
-    const navigate = useNavigate()
+  const { openDelete, handleCloseDelete, product } = props;
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-    const handleYesButton = async () => {
-   try { await axios.delete(`http://localhost:8080/products/${id}`)
+  const { currentUser } = useUserContext();
+
+  const handleYesButton = async () => {
+    try {
+      await axios.delete(`http://localhost:8080/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
       console.log("successfully deleted");
-      navigate("/products"); 
-   } catch(err) {
-    console.log(err);
-  }
+      navigate("/products");
+    } catch (err) {
+      console.log(err);
     }
-  
-    const handleNoButton = () => {
-      handleCloseDelete();
-    };
+  };
+
+  const handleNoButton = () => {
+    handleCloseDelete();
+  };
   return (
     <div>
       <Modal open={openDelete} handleClose={handleCloseDelete}>

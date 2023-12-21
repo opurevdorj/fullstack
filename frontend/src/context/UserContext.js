@@ -6,7 +6,7 @@ export const UserContext = createContext();
 //Create context provider
 export const UserContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [userContextLoading, setUserContextLoading] = useState(true);
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -14,16 +14,29 @@ export const UserContextProvider = ({ children }) => {
     if (user) {
       setCurrentUser(JSON.parse(user));
     }
-    setTimeout(() => {
-        setLoading(false);
-      }, 3000);
+    setUserContextLoading(false);
   }, []);
 
-  const logout = () => {
-    console.log("logged out");
+  const signUp = (userInfo) => {
+    setCurrentUser(userInfo);
   };
 
-  return <UserContext.Provider value={{ currentUser, logout, loading }}>{children}</UserContext.Provider>;
+  const signIn = (userInfo) => {
+    setCurrentUser(userInfo);
+  };
+
+  const signOut = (userInfo) => {
+    localStorage.removeItem("user");
+    setCurrentUser(null);
+  };
+
+  return (
+    <UserContext.Provider
+      value={{ currentUser, userContextLoading, signUp, signIn, signOut }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 //Custom hook to read user context

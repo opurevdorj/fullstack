@@ -4,8 +4,7 @@ import { Header } from "../../components/header";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CreateProductModal } from "./CreateProductModal";
-
-
+import { useUserContext } from "../../context/UserContext";
 
 export const Products = () => {
   const navigate = useNavigate();
@@ -15,11 +14,15 @@ export const Products = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
+  const { currentUser } = useUserContext();
 
   useEffect(() => {
     const getProducts = async () => {
-      const response = await axios.get("http://localhost:8080/products");
+      const response = await axios.get("http://localhost:8080/products", {
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
 
       const data = await response.data;
       setProducts(data);
@@ -53,10 +56,8 @@ export const Products = () => {
               <p>Category: {product.category}</p>
             </div>
           ))}
-          <CreateProductModal open={open} handleClose={handleClose}/>
+        <CreateProductModal open={open} handleClose={handleClose} />
       </div>
-    
-
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { Modal } from "../../components/modal";
 import * as yup from "yup";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { UserContext, useUserContext } from "../../context/UserContext";
 
 const validateForm = yup.object().shape({
   name: yup.string().min(4, "Must be more than 4 characters").required(),
@@ -32,6 +33,8 @@ export const CreateProductModal = (props) => {
     required: "",
   });
 
+  const {currentUser} = useUserContext();
+  
   const handleChange = (e) => {
     const inputName = e.target.name;
     const inputValue = e.target.value;
@@ -73,7 +76,12 @@ export const CreateProductModal = (props) => {
       } else {
         const response = await axios.post(
           `http://localhost:8080/products`,
-          formValues
+          formValues,
+          {
+            headers: {
+              Authorization: `Bearer ${currentUser.token}`,
+            },
+          }
         );
         const data = await response.data;
         setFormValues(data);

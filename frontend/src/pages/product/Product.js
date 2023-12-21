@@ -5,10 +5,12 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { EditProductModal } from "./EditProductModal";
 import { DeleteProductModal } from "./DeleteProductModal";
+import { useUserContext } from "../../context/UserContext";
 
 export const Product = () => {
   const [product, setProduct] = useState();
   const { id } = useParams();
+  const { currentUser, userContextLoading } = useUserContext();
 
   //edit product modal
   const [open, setOpen] = React.useState(false);
@@ -27,7 +29,12 @@ export const Product = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/products/${id}`
+          `http://localhost:8080/products/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${currentUser.token}`,
+            },
+          }
         );
         const data = await response.data;
         setProduct(data);
@@ -35,14 +42,15 @@ export const Product = () => {
         console.log(error);
       }
     };
-
     fetchProduct();
-
     return () => fetchProduct();
-  }, [id]);
+  }, [id, currentUser.token]);
   console.log(product);
-
-  if (!product) {
+  
+  if (userContextLoading) {
+    return <div>Loading...</div>;
+  }
+  if (!userContextLoading && !product) {
     return <div>Item not found</div>;
   }
   return (

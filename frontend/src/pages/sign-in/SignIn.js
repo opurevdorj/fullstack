@@ -3,6 +3,7 @@ import "./SignIn.css";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUserContext } from "../../context/UserContext";
 
 const validateForm = yup.object().shape({
   email: yup.string().email("Invalid email address").required(),
@@ -14,6 +15,7 @@ export const SignIn = () => {
   const navigateToSignUpPage = () => {
     navigate("/sign-up");
   };
+  const {signIn} = useUserContext();
 
   const [formValues, setFormValues] = useState({
     password: "",
@@ -69,6 +71,8 @@ export const SignIn = () => {
 
         localStorage.setItem("user", JSON.stringify(data));
         setFormValues(data);
+        signIn(data);
+        alert("Sign In Successful");
         setFormValues({
           email: "",
           password: "",

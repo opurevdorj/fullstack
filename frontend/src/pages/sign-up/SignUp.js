@@ -3,6 +3,7 @@ import "./SignUp.css";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUserContext } from "../../context/UserContext";
 
 const validateForm = yup.object().shape({
   fullname: yup.string().min(4, "Must be more than 4 characters").required(),
@@ -22,6 +23,7 @@ export const SignUp = () => {
   const navigateToSignInPage = () => {
     navigate("/sign-in");
   };
+  const { signUp } = useUserContext();
 
   const [formValues, setFormValues] = useState({
     fullname: "",
@@ -91,6 +93,8 @@ export const SignUp = () => {
 
         localStorage.setItem("user", JSON.stringify(data));
         setFormValues(data);
+        signUp(data);
+        alert("Sign Up Successful");
         setFormValues({
           fullname: "",
           email: "",

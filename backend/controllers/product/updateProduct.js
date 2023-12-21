@@ -10,7 +10,8 @@ const updateProduct = async (req, res) => {
 
   const updatedProduct = await Product.findOneAndUpdate(
     { _id: id },
-    { ...req.body }
+    { ...req.body },
+    {new: true}
   );
 
   if (!updatedProduct) {
@@ -18,7 +19,7 @@ const updateProduct = async (req, res) => {
     return;
 }
 
-res.status(200).json({message: "Product updated successfully"});
+res.status(200).json(updatedProduct);
 
 };
 
