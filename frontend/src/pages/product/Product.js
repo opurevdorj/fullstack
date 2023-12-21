@@ -6,45 +6,29 @@ import { useParams } from "react-router-dom";
 import { EditProductModal } from "./EditProductModal";
 import { DeleteProductModal } from "./DeleteProductModal";
 import { useUserContext } from "../../context/UserContext";
+import { useProductContext } from "../../context/ProductContext";
 
 export const Product = () => {
-  const [product, setProduct] = useState();
   const { id } = useParams();
   const { currentUser, userContextLoading } = useUserContext();
 
   //edit product modal
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
   //delete product modal
-  const [openDelete, setOpenDelete] = React.useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => {
     setOpenDelete(true);
   };
   const handleCloseDelete = () => setOpenDelete(false);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/products/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${currentUser.token}`,
-            },
-          }
-        );
-        const data = await response.data;
-        setProduct(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchProduct();
-    return () => fetchProduct();
-  }, [id, currentUser.token]);
+  //ProductContext
+  const { products, productContextLoading } = useProductContext();
+  const product = products.find((product) => product._id === id);
+
   console.log(product);
   
   if (userContextLoading) {

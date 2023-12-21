@@ -1,34 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./Products.css";
 import { Header } from "../../components/header";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CreateProductModal } from "./CreateProductModal";
-import { useUserContext } from "../../context/UserContext";
+import { useProductContext } from "../../context/ProductContext";
 
 export const Products = () => {
   const navigate = useNavigate();
-
-  const [products, setProducts] = useState([]);
-  const [open, setOpen] = React.useState(false);
+  const { products } = useProductContext();
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const { currentUser } = useUserContext();
-
-  useEffect(() => {
-    const getProducts = async () => {
-      const response = await axios.get("http://localhost:8080/products", {
-        headers: {
-          Authorization: `Bearer ${currentUser.token}`,
-        },
-      });
-
-      const data = await response.data;
-      setProducts(data);
-    };
-    getProducts();
-  }, []);
 
   console.log(products);
   return (

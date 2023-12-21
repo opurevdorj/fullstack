@@ -4,6 +4,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { UserContext, useUserContext } from "../../context/UserContext";
+import { useProductContext } from "../../context/ProductContext";
 
 const validateForm = yup.object().shape({
   name: yup.string().min(4, "Must be more than 4 characters").required(),
@@ -17,6 +18,7 @@ const validateForm = yup.object().shape({
 });
 
 export const CreateProductModal = (props) => {
+  const { CREATE_PRODUCT } = useProductContext();
   const { open, handleClose } = props;
   const { id } = useParams();
   const [formValues, setFormValues] = useState({
@@ -33,8 +35,8 @@ export const CreateProductModal = (props) => {
     required: "",
   });
 
-  const {currentUser} = useUserContext();
-  
+  const { currentUser } = useUserContext();
+
   const handleChange = (e) => {
     const inputName = e.target.name;
     const inputValue = e.target.value;
@@ -83,12 +85,12 @@ export const CreateProductModal = (props) => {
             },
           }
         );
+        console.log(response);
         const data = await response.data;
-        setFormValues(data);
-
+        CREATE_PRODUCT(data);
+       
         setFormValues({ name: "", description: "", price: "", category: "" });
         handleClose();
-        window.location.reload();
       }
     } catch (error) {
       console.log(error);

@@ -3,6 +3,7 @@ import { Modal } from "../../components/modal";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useUserContext } from "../../context/UserContext";
+import { useProductContext } from "../../context/ProductContext";
 
 export const DeleteProductModal = (props) => {
   const { openDelete, handleCloseDelete, product } = props;
@@ -10,15 +11,17 @@ export const DeleteProductModal = (props) => {
   const navigate = useNavigate();
 
   const { currentUser } = useUserContext();
+  const {DELETE_PRODUCT} = useProductContext();
 
   const handleYesButton = async () => {
     try {
-      await axios.delete(`http://localhost:8080/products/${id}`, {
+      const response = await axios.delete(`http://localhost:8080/products/${id}`, {
         headers: {
           Authorization: `Bearer ${currentUser.token}`,
         },
       });
-      console.log("successfully deleted");
+      const data = await response.data
+      DELETE_PRODUCT(data._id)
       navigate("/products");
     } catch (err) {
       console.log(err);

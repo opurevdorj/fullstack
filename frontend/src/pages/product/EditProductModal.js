@@ -3,8 +3,10 @@ import { Modal } from "../../components/modal";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useUserContext } from "../../context/UserContext";
+import { useProductContext } from "../../context/ProductContext";
 
 export const EditProductModal = (props) => {
+ 
   const { id } = useParams();
   const { open, handleClose, product } = props;
   const [inputValue, setInputValue] = useState({
@@ -15,6 +17,7 @@ export const EditProductModal = (props) => {
   });
 
   const { currentUser } = useUserContext();
+  const { UPDATE_PRODUCT } = useProductContext();
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -40,12 +43,18 @@ export const EditProductModal = (props) => {
       category: inputValue.category,
     };
     try {
-      await axios.put(`http://localhost:8080/products/${id}`, updatedProduct, {
-        headers: {
-          Authorization: `Bearer ${currentUser.token}`,
-        },
-      });
-      console.log("Successfully edited");
+      const response = await axios.put(
+        `http://localhost:8080/products/${id}`,
+        updatedProduct,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        }
+      );
+      const data = await response.data;
+      UPDATE_PRODUCT(data);
+      
       handleClose();
     } catch (error) {
       console.error(error);
