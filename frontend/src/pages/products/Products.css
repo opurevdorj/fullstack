@@ -1,3 +1,10 @@
+.productPage {
+    width: 100vw;
+  height: 100vh;
+    background: url('../../images/product-image.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
 .Title {
     width: 100%;
     height: 50px;
@@ -10,4 +17,32 @@
 .createInput {
 display: flex;
 flex-direction: column;
+
+
+}
+
+.ButtonCreate {
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    border: transparent;
+    margin-top: 50px;
+    background-color: #097969;
+    color: white;
+}
+.createInputs {
+    height: 30px;
+    margin-top: 10px;
+    border: 1px solid #097969;
+    border-radius: 10px;
+
+}
+.cancelAndSaveButton {
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    border: transparent;
+    margin-top: 50px;
+    background-color: #097969;
+    color: white;
 }

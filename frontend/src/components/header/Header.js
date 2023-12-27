@@ -18,8 +18,8 @@ export const Header = () => {
     return (
       <div className="Header">
         <div>
-          <Link className="Menus" to="/">
-            Home
+          <Link id="homeMenu" className="Menus" to="/">
+            UBO
           </Link>
         </div>
         <div>
@@ -44,8 +44,8 @@ export const Header = () => {
   return (
     <div className="Header">
       <div>
-        <Link className="Menus" to="/">
-          Home
+        <Link id="homeMenu" className="Menus" to="/">
+          UBO
         </Link>
       </div>
       <div>

@@ -1,0 +1,88 @@
+.backgroundContainer {
+    background: url('../../images/home-image.jpg') no-repeat center center fixed;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+
+}
+.backgroundContainerwithUser {
+    background: url('../../images/homeuser-image.jpg') no-repeat center center fixed;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+   
+}
+
+.descriptionContainer {
+    width: 100vw;
+    height: 100vh;
+   display: flex;
+justify-content: right;
+align-items: center;
+}
+
+.sloganContainer {
+    width: 100vw;
+    height: 100vh;
+   display: flex;
+justify-content: right;
+align-items: center;
+}
+
+.titleContainer {
+    height: 300px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-right: 60px;
+   
+}
+.slogan {
+    font-size: 30px;
+    color: white;
+    
+
+}
+.serviceTitle {
+    font-size: 50px;
+    color: white;
+
+}
+.description {
+    font-size: 20px;
+    color: white;
+}
+.descriptionTitleContainer {
+    height: 500px;
+    width: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #097969;
+    margin-right: 60px;
+    border-radius: 10px;
+}
+.paragraphContainer {
+    height: 400px;
+    width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    line-height: 1.6;
+   
+}
+.estimateButton {
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    border: transparent;
+    margin-top: 50px;
+    background-color: #097969;
+    color: white;
+    margin-bottom: 20px;
+}

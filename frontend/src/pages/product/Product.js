@@ -41,11 +41,12 @@ export const Product = () => {
     <div>
       <Header />
       <div className="Title">Product Page</div>
-      <button onClick={handleOpen}>Edit product</button>
-      <button onClick={handleOpenDelete}>Delete</button>
+      <button className="EditAndDeleteButton" onClick={handleOpen}>Edit product</button>
+      <button className="EditAndDeleteButton" onClick={handleOpenDelete}>Delete</button>
       {product && (
         <div
           style={{
+            border: "1px solid #097969",
             backgroundColor: "whitesmoke",
             width: 200,
             borderRadius: "10px",

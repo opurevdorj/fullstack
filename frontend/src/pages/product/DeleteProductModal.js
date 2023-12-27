@@ -34,9 +34,9 @@ export const DeleteProductModal = (props) => {
   return (
     <div>
       <Modal open={openDelete} handleClose={handleCloseDelete}>
-        <div>Are you sure you want to delete this ${id} product?</div>
-        <button onClick={handleNoButton}>No</button>
-        <button onClick={handleYesButton}>Yes</button>
+        <div style={{display: "flex", justifyContent: "center"}}>Are you sure you want to delete this product?</div>
+        <button className="cancelAndSaveButton" onClick={handleNoButton}>No</button>
+        <button className="cancelAndSaveButton" onClick={handleYesButton}>Yes</button>
       </Modal>
     </div>
   );

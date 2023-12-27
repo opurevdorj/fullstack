@@ -5,6 +5,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { UserContext, useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
+import { colors } from "@mui/material";
 
 const validateForm = yup.object().shape({
   name: yup.string().min(4, "Must be more than 4 characters").required(),
@@ -88,7 +89,7 @@ export const CreateProductModal = (props) => {
         console.log(response);
         const data = await response.data;
         CREATE_PRODUCT(data);
-       
+
         setFormValues({ name: "", description: "", price: "", category: "" });
         handleClose();
       }
@@ -107,9 +108,10 @@ export const CreateProductModal = (props) => {
   return (
     <div>
       <Modal open={open} handleClose={handleClose}>
-        <div>Create product</div>
+        <div style={{color: "#097969;", fontSize: "20px"}}>Create product</div>
         <div className="createInput">
           <input
+            className="createInputs"
             value={formValues.name}
             name="name"
             onChange={handleChange}
@@ -117,6 +119,7 @@ export const CreateProductModal = (props) => {
             type="text"
           />
           <input
+            className="createInputs"
             value={formValues.description}
             name="description"
             onChange={handleChange}
@@ -124,6 +127,7 @@ export const CreateProductModal = (props) => {
             type="text"
           />
           <input
+            className="createInputs"
             value={formValues.price}
             name="price"
             onChange={handleChange}
@@ -131,6 +135,7 @@ export const CreateProductModal = (props) => {
             type="text"
           />
           <input
+            className="createInputs"
             value={formValues.category}
             name="category"
             onChange={handleChange}
@@ -139,8 +144,8 @@ export const CreateProductModal = (props) => {
           />
         </div>
         <div>{formErrors.required}</div>
-        <button onClick={handleCancelButton}>Cancel</button>
-        <button onClick={handleSaveButton}>Save</button>
+        <button className="cancelAndSaveButton" onClick={handleCancelButton}>Cancel</button>
+        <button className="cancelAndSaveButton"  onClick={handleSaveButton}>Save</button>
       </Modal>
     </div>
   );

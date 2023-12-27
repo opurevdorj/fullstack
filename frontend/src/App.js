@@ -4,6 +4,7 @@ import { SignIn } from "./pages/sign-in/SignIn";
 import { SignUp } from "./pages/sign-up/SignUp";
 import { useUserContext } from "./context/UserContext";
 
+
 export const App = () => {
   const { currentUser, userContextLoading } = useUserContext();
 

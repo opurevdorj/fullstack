@@ -1,0 +1,17 @@
+.EditAndDeleteButton {
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    border: transparent;
+    margin-top: 50px;
+    background-color:#097969;
+    color: white;
+}
+.editAndDeleteInput {
+    height: 30px;
+    margin-top: 10px;
+    border: 1px solid #097969;
+    border-radius: 10px;
+}
+
+

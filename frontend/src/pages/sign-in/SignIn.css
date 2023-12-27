@@ -1,27 +1,50 @@
 #container {
-   
-    width: 100vw;
-    height: 100vh;
-
+  width: 100vw;
+  height: 100vh;
+  background: url('../../images/signIn-image.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+ 
+}
+#subContainer {
+  width: 600px;
+  height: 600px;
+  background-color:#FAF9F6;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+ 
 }
 
+
 #title {
-  margin-top: 40px;
-  margin-bottom: 30px;
+  
+  padding-bottom: 30px;
   font-size: 30px;
-  color: #0bbef2;
+  color: #097969;
   display: flex;
   justify-content: center;
+
+
 }
 
 #inputContainer {
-  margin-left: 520px;
-  width: 400px;
+  display: flex;
+  align-items: center;
   flex-direction: column;
+  width: 400px;
+  
 }
 
 .inputNames {
   display: flex;
+  align-self:flex-start;
+  
 }
 #signupButton {
   width: 400px;
@@ -29,7 +52,7 @@
   border-radius: 10px;
   border: transparent;
   margin-top: 50px;
-  background-color: #0bbef2;
+  background-color: #097969;
   color: white;
   margin-bottom: 20px;
 
@@ -53,9 +76,11 @@
 }
 .signInandSignUp {
   border: transparent;
-  color: #0bbef2;
+  color: #097969;
   background-color: transparent;
   margin-left: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .inputs {
@@ -63,6 +88,6 @@
   height: 30px;
   border-radius: 10px;
   margin-bottom: 20px;
-  border: 1px solid #0bbef2;
+  border: 1px solid #097969;
  
 }

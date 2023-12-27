@@ -6,7 +6,6 @@ import { useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
 
 export const EditProductModal = (props) => {
- 
   const { id } = useParams();
   const { open, handleClose, product } = props;
   const [inputValue, setInputValue] = useState({
@@ -54,7 +53,7 @@ export const EditProductModal = (props) => {
       );
       const data = await response.data;
       UPDATE_PRODUCT(data);
-      
+
       handleClose();
     } catch (error) {
       console.error(error);
@@ -64,9 +63,10 @@ export const EditProductModal = (props) => {
   return (
     <div>
       <Modal open={open} handleClose={handleClose}>
-        <div>Edit product</div>
+        <div style={{ color: "#097969;", fontSize: "20px" }}>Edit product</div>
         <div className="createInput">
           <input
+            className="editAndDeleteInput"
             onChange={handleInput}
             name="name"
             placeholder="Name"
@@ -74,6 +74,7 @@ export const EditProductModal = (props) => {
             value={inputValue.name}
           />
           <input
+            className="editAndDeleteInput"
             onChange={handleInput}
             name="description"
             placeholder="Description"
@@ -81,6 +82,7 @@ export const EditProductModal = (props) => {
             value={inputValue.description}
           />
           <input
+            className="editAndDeleteInput"
             onChange={handleInput}
             name="price"
             placeholder="Price"
@@ -88,6 +90,7 @@ export const EditProductModal = (props) => {
             value={inputValue.price}
           />
           <input
+            className="editAndDeleteInput"
             onChange={handleInput}
             name="category"
             placeholder="Category"
@@ -95,8 +98,12 @@ export const EditProductModal = (props) => {
             value={inputValue.category}
           />
         </div>
-        <button onClick={handleCancelButton}>Cancel</button>
-        <button onClick={handleSaveButton}>Save</button>
+        <button className="cancelAndSaveButton" onClick={handleCancelButton}>
+          Cancel
+        </button>
+        <button className="cancelAndSaveButton" onClick={handleSaveButton}>
+          Save
+        </button>
       </Modal>
     </div>
   );

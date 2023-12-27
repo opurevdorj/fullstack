@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SignUp.css";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useUserContext } from "../../context/UserContext";
 
@@ -111,63 +111,70 @@ export const SignUp = () => {
 
   return (
     <div id="container">
-      <div id="title">Get Started Now</div>
-      <div id="inputContainer">
-        <div className="inputNames">Fullname</div>
-        <input
-          className="inputs"
-          placeholder="Enter your fullname"
-          onChange={handleInput}
-          value={formValues.fullname}
-          name="fullname"
-        />
+      <div id="subContainer">
+        <div id="title">Get Started Now</div>
+        <div id="inputContainer">
+          <div className="inputNames">Fullname</div>
+          <input
+            className="inputs"
+            placeholder="Enter your fullname"
+            onChange={handleInput}
+            value={formValues.fullname}
+            name="fullname"
+          />
 
-        <div id="notification">{formErrors.fullname}</div>
+          <div id="notification">{formErrors.fullname}</div>
 
-        <div className="inputNames">Email address</div>
-        <input
-          className="inputs"
-          value={formValues.email}
-          placeholder="Enter your email address"
-          onChange={handleInput}
-          name="email"
-        />
-        <div id="notification">{formErrors.email}</div>
+          <div className="inputNames">Email address</div>
+          <input
+            className="inputs"
+            value={formValues.email}
+            placeholder="Enter your email address"
+            onChange={handleInput}
+            name="email"
+          />
+          <div id="notification">{formErrors.email}</div>
 
-        <div className="inputNames">Password</div>
-        <input
-          type="password"
-          className="inputs"
-          value={formValues.password}
-          placeholder="Enter your password"
-          onChange={handleInput}
-          name="password"
-        />
-        <div id="notification">{formErrors.password}</div>
-        <div className="inputNames">Confirm Password</div>
-        <input
-          type="password"
-          className="inputs"
-          value={formValues.confirmPassword}
-          placeholder="Confirm your password"
-          onChange={handleInput}
-          name="confirmPassword"
-        />
-        <div id="notification">{formErrors.confirmPassword}</div>
-      </div>
+          <div className="inputNames">Password</div>
+          <input
+            type="password"
+            className="inputs"
+            value={formValues.password}
+            placeholder="Enter your password"
+            onChange={handleInput}
+            name="password"
+          />
+          <div id="notification">{formErrors.password}</div>
+          <div className="inputNames">Confirm Password</div>
+          <input
+            type="password"
+            className="inputs"
+            value={formValues.confirmPassword}
+            placeholder="Confirm your password"
+            onChange={handleInput}
+            name="confirmPassword"
+          />
+          <div id="notification">{formErrors.confirmPassword}</div>
+        </div>
 
-      <div id="notification">{formErrors.required}</div>
-      <div id="signUpContainer">
-        <button id="signupButton" onClick={handleSignUp}>
-          Sign Up
-        </button>
-      </div>
+        <div id="notification">{formErrors.required}</div>
+        <div id="signUpContainer">
+          <button id="signupButton" onClick={handleSignUp}>
+            Sign Up
+          </button>
+        </div>
 
-      <div id="haveAccount">
-        Have an account?
-        <button className="signInandSignUp" onClick={navigateToSignInPage}>
-          Sign In
-        </button>
+        <div id="haveAccount">
+          Have an account?
+          <button className="signInandSignUp" onClick={navigateToSignInPage}>
+            Sign In
+          </button>
+        </div>
+        <div>
+          <Link style={{ color: "#097969"}} to="/">
+            Back
+          </Link>
+        </div>
       </div>
     </div>
   );

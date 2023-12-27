@@ -1,12 +1,19 @@
 .Header {
     width: 100%;
-    height: 50px;
+    height: 55px;
     display:flex;
     justify-content: space-evenly;
     align-items: center;
-    background-color: #0bbef2;
+    background-color: #097969;
+    
+   
     
 }
 .Menus {
    color: white;
+   font-size: 18px;
+}
+#homeMenu {
+    font-family: Brush Script MT, cursive;
+    font-size: 22px;
 }

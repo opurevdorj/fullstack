@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SignIn.css";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useUserContext } from "../../context/UserContext";
 
@@ -15,7 +15,7 @@ export const SignIn = () => {
   const navigateToSignUpPage = () => {
     navigate("/sign-up");
   };
-  const {signIn} = useUserContext();
+  const { signIn } = useUserContext();
 
   const [formValues, setFormValues] = useState({
     password: "",
@@ -87,42 +87,49 @@ export const SignIn = () => {
 
   return (
     <div id="container">
-      <div id="title">Welcome </div>
+      <div id="subContainer">
+        <div id="title">Welcome </div>
 
-      <div id="inputContainer">
-        <div className="inputNames">Email address</div>
-        <input
-          className="inputs"
-          value={formValues.email}
-          placeholder="Enter your email address"
-          onChange={handleInput}
-          name="email"
-        />
-        <div id="notification">{formErrors.email}</div>
+        <div id="inputContainer">
+          <div className="inputNames">Email address</div>
+          <input
+            className="inputs"
+            value={formValues.email}
+            placeholder="Enter your email address"
+            onChange={handleInput}
+            name="email"
+          />
+          <div id="notification">{formErrors.email}</div>
 
-        <div className="inputNames">Password</div>
+          <div className="inputNames">Password</div>
 
-        <input
-          type="password"
-          className="inputs"
-          value={formValues.password}
-          placeholder="Enter your password"
-          onChange={handleInput}
-          name="password"
-        />
-        <div id="notification">{formErrors.password}</div>
-      </div>
-      <div id="notification">{formErrors.required}</div>
-      <div id="signUpContainer">
-        <button id="signupButton" onClick={handleSignIn}>
-          Sign In
-        </button>
-      </div>
-      <div id="haveAccount">
-        Don't have an account?
-        <button className="signInandSignUp" onClick={navigateToSignUpPage}>
-          Sign Up
-        </button>
+          <input
+            type="password"
+            className="inputs"
+            value={formValues.password}
+            placeholder="Enter your password"
+            onChange={handleInput}
+            name="password"
+          />
+          <div id="notification">{formErrors.password}</div>
+        </div>
+        <div id="notification">{formErrors.required}</div>
+        <div id="signUpContainer">
+          <button id="signupButton" onClick={handleSignIn}>
+            Sign In
+          </button>
+        </div>
+        <div id="haveAccount">
+          Don't have an account?
+          <button className="signInandSignUp" onClick={navigateToSignUpPage}>
+            Sign Up
+          </button>
+        </div>
+        <div>
+          <Link style={{color: " #097969"}} to="/">
+            Back
+          </Link>
+        </div>
       </div>
     </div>
   );

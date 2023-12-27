@@ -14,16 +14,17 @@ export const Products = () => {
 
   console.log(products);
   return (
-    <div>
+    <div className="productPage">
       <Header />
       <div className="Title">Products Page</div>
-      <button onClick={handleOpen}>Create Product</button>
+      <button className="ButtonCreate" onClick={handleOpen}>Create Product</button>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {products &&
           products.map((product) => (
             <div
               key={product._id}
               style={{
+                border: "1px solid #097969",
                 backgroundColor: "whitesmoke",
                 width: 200,
                 borderRadius: "10px",
