@@ -1,15 +1,19 @@
 const Product = require("../../models/product")
+const multer = require('multer')
+
+const upload = multer({dest : 'uploads/'}).single('photo') 
 
 const createProduct = async (req, res) => {
-  const { name, price, description, category } = req.body;
+  const { image, name, price, description, category } = req.body;
 
   try {
-    if (!name || !price || !description || !category) {
+    if (!image || !name || !price || !description || !category) {
       return res.status(400).json({
         message: `All fields are required`,
       });
     } else {
       const product = await Product.create({
+        image,
         name,
         price,
         description,
