@@ -86,7 +86,7 @@ export const SignUp = () => {
         setFormErrors({ ...formErrors, required: "All error must be cleared" });
       } else {
         const response = await axios.post(
-          `http://localhost:8080/users/sign-up`,
+          `https://fullstack-backend-5gvr.onrender.com/users/sign-up`,
           formValues
         );
         const data = await response.data;

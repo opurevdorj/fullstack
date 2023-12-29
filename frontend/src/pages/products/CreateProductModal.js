@@ -90,7 +90,7 @@ export const CreateProductModal = (props) => {
         setFormErrors({ ...formErrors, required: "All error must be cleared" });
       } else {
         const response = await axios.post(
-          `http://localhost:8080/products`,
+          `https://fullstack-backend-5gvr.onrender.com/products`,
           formValues,
           {
             headers: {
