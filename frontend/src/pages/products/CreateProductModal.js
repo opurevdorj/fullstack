@@ -24,14 +24,12 @@ export const CreateProductModal = (props) => {
   const [file, setFile] = useState();
   const { id } = useParams();
   const [formValues, setFormValues] = useState({
-    image: "",
     name: "",
     description: "",
     price: "",
     category: "",
   });
   const [formErrors, setFormErrors] = useState({
-    image: "",
     name: "",
     description: "",
     price: "",
@@ -58,10 +56,10 @@ export const CreateProductModal = (props) => {
     setFormValues({ ...formValues, [inputName]: inputValue });
   };
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-    // console.log(URL.createObjectURL(e.target.files[0]));
-  };
+  // const handleFileChange = (e) => {
+  //   setFile(e.target.files[0]);
+  //   // console.log(URL.createObjectURL(e.target.files[0]));
+  // };
 
   
 
@@ -69,7 +67,7 @@ export const CreateProductModal = (props) => {
     try {
       if (
         // checks if any inputs are empty
-        formValues.image === "" ||
+        // formValues.image === "" ||
         formValues.name === "" ||
         formValues.description === "" ||
         formValues.price === "" ||
@@ -81,7 +79,7 @@ export const CreateProductModal = (props) => {
         });
       } else if (
         // checks if there is any errors
-        formErrors.image !== "" ||
+        // formErrors.image !== "" ||
         formErrors.name !== "" ||
         formErrors.description !== "" ||
         formErrors.price !== "" ||
@@ -102,7 +100,7 @@ export const CreateProductModal = (props) => {
         const data = await response.data;
         CREATE_PRODUCT(data);
 
-        setFormValues({ image: "", name: "", description: "", price: "", category: "" });
+        setFormValues({ name: "", description: "", price: "", category: "" });
         handleClose();
       }
     } catch (error) {
@@ -112,8 +110,8 @@ export const CreateProductModal = (props) => {
   };
 
   const handleCancelButton = () => {
-    setFormValues({ image: "", name: "", description: "", price: "", category: "" });
-    setFormErrors({ image: "", name: "", description: "", price: "", category: "" });
+    setFormValues({name: "", description: "", price: "", category: "" });
+    setFormErrors({ name: "", description: "", price: "", category: "" });
     handleClose();
   };
 
@@ -122,14 +120,7 @@ export const CreateProductModal = (props) => {
       <Modal open={open} handleClose={handleClose}>
         <div style={{color: "#097969;", fontSize: "20px"}}>Create product</div>
         <div className="createInput">
-        <input
-            className="createInputs"
-            value={formValues.image}
-            name="image"
-            onChange={handleFileChange}
-            placeholder="Image"
-            type="file"
-          />
+       
           <input
             className="createInputs"
             value={formValues.name}
