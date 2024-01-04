@@ -21,7 +21,7 @@ const validateForm = yup.object().shape({
 export const CreateProductModal = (props) => {
   const { CREATE_PRODUCT } = useProductContext();
   const { open, handleClose } = props;
-  const [file, setFile] = useState();
+
   const { id } = useParams();
   const [formValues, setFormValues] = useState({
     name: "",

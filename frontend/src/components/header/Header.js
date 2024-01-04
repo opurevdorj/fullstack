@@ -2,13 +2,17 @@ import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../../context/UserContext";
+import { useProductContext } from "../../context/ProductContext";
 
 export const Header = () => {
   const { currentUser, signOut, userContextLoading } = useUserContext();
+  const {setProducts} = useProductContext();
 
   const handleSignOut = () => {
     signOut();
+    setProducts([]);
     alert("You have been signed out");
+    
   };
 
   if (userContextLoading) {
