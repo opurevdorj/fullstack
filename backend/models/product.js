@@ -21,6 +21,11 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "Product userId is required"]
     },
+    type: {
+        type: String,
+        enum: ["public", "private"],
+        required: [true, "Product displayMode is required"]
+    },
 },
 {
     timestamps: true,

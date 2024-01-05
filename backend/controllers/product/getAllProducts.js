@@ -1,20 +1,16 @@
-const Product = require("../../models/product")
+const Product = require("../../models/product");
 
 const getAllProducts = async (req, res) => {
-    
-try {
-    const userId = req.user._id
-    const products = await Product.find({userId});
+  const userId = req.user._id;
+  const products = await Product.find({
+    $or: [{ userId }, { type: "public" }],
+  });
 
-    if (!products) {
-        res.status(404).json({ message:"Product not found"});
-        return;
-    }
+  if (!products) {
+    res.status(404).json({ message: "Product not found" });
 
     res.status(200).json(products);
-} catch (err) {
-    res.status(500).json({ message: err.message });
-}
-   };
+  }
+};
 
-module.exports = {getAllProducts};
+module.exports = { getAllProducts };

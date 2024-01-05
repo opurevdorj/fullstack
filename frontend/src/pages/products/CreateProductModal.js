@@ -5,6 +5,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { UserContext, useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
+import { Radio } from 'antd'
 
 
 const validateForm = yup.object().shape({
@@ -18,7 +19,10 @@ const validateForm = yup.object().shape({
   category: yup.string().max(20, "Must be less than 20 characters").required(),
 });
 
+const plainOptions = ['public', 'private',];
+
 export const CreateProductModal = (props) => {
+  const [type, setType] = useState("public")
   const { CREATE_PRODUCT } = useProductContext();
   const { open, handleClose } = props;
 
@@ -56,6 +60,10 @@ export const CreateProductModal = (props) => {
     setFormValues({ ...formValues, [inputName]: inputValue });
   };
 
+  const onChangeType = ({ target: { value } }) => {
+    setType(value);
+  };
+
   // const handleFileChange = (e) => {
   //   setFile(e.target.files[0]);
   //   // console.log(URL.createObjectURL(e.target.files[0]));
@@ -89,6 +97,7 @@ export const CreateProductModal = (props) => {
       } else {
         const response = await axios.post(
           `https://fullstack-backend-5gvr.onrender.com/products`,
+          // 'http://localhost:8080/products',
           formValues,
           {
             headers: {
@@ -153,6 +162,13 @@ export const CreateProductModal = (props) => {
             placeholder="Category"
             type="text"
           />
+          <Radio.Group
+          options={plainOptions}
+          onChange={onChangeType}
+          value={formValues.value}
+          optionType="button"
+          buttonStyle="solid"
+        />
         </div>
         <div>{formErrors.required}</div>
         <button className="cancelAndSaveButton" onClick={handleCancelButton}>Cancel</button>
