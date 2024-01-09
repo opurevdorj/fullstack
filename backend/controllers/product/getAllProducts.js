@@ -9,8 +9,8 @@ const getAllProducts = async (req, res) => {
   if (!products) {
     res.status(404).json({ message: "Product not found" });
 
-    res.status(200).json(products);
   }
+  res.status(200).json(products);
 };
 
 module.exports = { getAllProducts };

@@ -9,16 +9,19 @@ export const ProductContextProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [productContextLoading, setProductContextLoading] = useState(true);
 
+  const token = currentUser?.token;
+
+console.log(currentUser)
+
   useEffect(() => {
-    if (!userContextLoading) {
+    if (!userContextLoading && token) {
       const fetchProducts = async () => {
         try {
           const response = await axios.get(
-            `https://fullstack-backend-5gvr.onrender.com/products`, 
-            // 'http://localhost:8080/products',
+            "http://localhost:8080/products", 
             {
             headers: {
-              Authorization: `Bearer ${currentUser.token}`,
+              Authorization: `Bearer ${token}`,
             },
           });
           const data = await response.data;
@@ -26,6 +29,7 @@ export const ProductContextProvider = ({ children }) => {
           setProductContextLoading(false);
         } catch (error) {
           console.log(error);
+          setProductContextLoading(false);
         }
       };
       if (currentUser) {
@@ -36,10 +40,10 @@ export const ProductContextProvider = ({ children }) => {
     } else {
       setProducts([]);
     }
-  }, [currentUser, userContextLoading]);
+  }, [currentUser, userContextLoading, token]);
 
   const CREATE_PRODUCT = async (product) => {
-    setProducts([...products, product]);
+    setProducts([product, ...products]);
   };
   const UPDATE_PRODUCT = async (updatedProduct) => {
     const updatedProducts = products.map((product) => {

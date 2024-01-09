@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Avatar, Card } from "antd";
 import "./Product.css";
 import { Header } from "../../components/header";
 import axios from "axios";
@@ -7,6 +9,8 @@ import { EditProductModal } from "./EditProductModal";
 import { DeleteProductModal } from "./DeleteProductModal";
 import { useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
+
+const { Meta } = Card;
 
 export const Product = () => {
   const { id } = useParams();
@@ -30,46 +34,66 @@ export const Product = () => {
   const product = products.find((product) => product._id === id);
 
   console.log(product);
-  
+  console.log(currentUser);
   if (userContextLoading) {
     return <div>Loading...</div>;
   }
   if (!userContextLoading && !product) {
     return <div>Item not found</div>;
   }
-  return (
-    <div>
-      <Header />
-      <div className="Title">Product Page</div>
-      <button className="EditAndDeleteButton" onClick={handleOpen}>Edit product</button>
-      <button className="EditAndDeleteButton" onClick={handleOpenDelete}>Delete</button>
-      {product && (
-        <div
-          style={{
-            border: "1px solid #097969",
-            backgroundColor: "whitesmoke",
-            width: 200,
-            borderRadius: "10px",
-            padding: "20px",
-            margin: "20px",
-          }}
-        >
-          <h3>Name: {product.name}</h3>
-          <p>Description: {product.description}</p>
-          <p>Price: {product.price}</p>
-          <p>Category: {product.category}</p>
-        </div>
-      )}
-      <EditProductModal
-        open={open}
-        handleClose={handleClose}
-        product={product}
-      />
-      <DeleteProductModal
-        openDelete={openDelete}
-        handleCloseDelete={handleCloseDelete}
-        product={product}
-      />
-    </div>
-  );
+  if (currentUser) {
+    return (
+      <div>
+        <Header />
+        <div className="Title">Product Page</div>
+        {product && (
+          <Card
+            style={{
+              width: 300,
+              padding: "20px",
+              margin: "20px",
+            }}
+            cover={
+              <img
+                alt="example"
+                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              />
+            }
+            actions={
+              product.userId === currentUser.user.id
+                ? [
+                    <DeleteOutlined key="delete" onClick={handleOpenDelete} />,
+                    <EditOutlined key="edit" onClick={handleOpen} />,
+                  ]
+                : []
+            }
+          >
+            <p>{product.type}</p>
+            <Meta
+              avatar={
+                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
+              }
+              title={product.name}
+              description={product.description}
+            />
+            <p>Price: {product.price}</p>
+            <p>Category: {product.category}</p>
+            <p>Created by: {product.userEmail}</p>
+          </Card>
+
+        )}
+        <EditProductModal
+          open={open}
+          handleClose={handleClose}
+          product={product}
+        />
+        <DeleteProductModal
+          openDelete={openDelete}
+          handleCloseDelete={handleCloseDelete}
+          product={product}
+        />
+      </div>
+    );
+  }
+ 
 };

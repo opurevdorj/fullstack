@@ -43,7 +43,7 @@ export const EditProductModal = (props) => {
     };
     try {
       const response = await axios.put(
-        `https://fullstack-backend-5gvr.onrender.com/products/${id}`,
+        `http://localhost:8080/products/${id}`,
         updatedProduct,
         {
           headers: {

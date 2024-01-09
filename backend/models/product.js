@@ -21,10 +21,14 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "Product userId is required"]
     },
+    userEmail: {
+        type: String,
+        required: [true, "Product userEmail is required"]
+    },
     type: {
         type: String,
         enum: ["public", "private"],
-        required: [true, "Product displayMode is required"]
+        required: [true, "Product type is required"]
     },
 },
 {

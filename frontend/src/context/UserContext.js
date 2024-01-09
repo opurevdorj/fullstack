@@ -25,7 +25,7 @@ export const UserContextProvider = ({ children }) => {
     setCurrentUser(userInfo);
   };
 
-  const signOut = (userInfo) => {
+  const signOut = () => {
     localStorage.removeItem("user");
     setCurrentUser(null);
   };

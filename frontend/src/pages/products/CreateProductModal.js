@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Modal } from "../../components/modal";
 import * as yup from "yup";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import { UserContext, useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
 import { Radio } from 'antd'
@@ -19,19 +18,19 @@ const validateForm = yup.object().shape({
   category: yup.string().max(20, "Must be less than 20 characters").required(),
 });
 
-const plainOptions = ['public', 'private',];
+const plainOptions = ['public', 'private'];
 
 export const CreateProductModal = (props) => {
-  const [type, setType] = useState("public")
+  
   const { CREATE_PRODUCT } = useProductContext();
   const { open, handleClose } = props;
 
-  const { id } = useParams();
   const [formValues, setFormValues] = useState({
     name: "",
     description: "",
     price: "",
     category: "",
+    type: "public",
   });
   const [formErrors, setFormErrors] = useState({
     name: "",
@@ -40,7 +39,7 @@ export const CreateProductModal = (props) => {
     category: "",
     required: "",
   });
-
+console.log(formValues);
   const { currentUser } = useUserContext();
 
   const handleChange = (e) => {
@@ -61,7 +60,7 @@ export const CreateProductModal = (props) => {
   };
 
   const onChangeType = ({ target: { value } }) => {
-    setType(value);
+    setFormValues({...formValues, type: value });
   };
 
   // const handleFileChange = (e) => {
@@ -96,8 +95,7 @@ export const CreateProductModal = (props) => {
         setFormErrors({ ...formErrors, required: "All error must be cleared" });
       } else {
         const response = await axios.post(
-          `https://fullstack-backend-5gvr.onrender.com/products`,
-          // 'http://localhost:8080/products',
+          `http://localhost:8080/products`,
           formValues,
           {
             headers: {
@@ -165,7 +163,7 @@ export const CreateProductModal = (props) => {
           <Radio.Group
           options={plainOptions}
           onChange={onChangeType}
-          value={formValues.value}
+          value={formValues.type}
           optionType="button"
           buttonStyle="solid"
         />
