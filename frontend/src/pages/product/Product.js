@@ -9,6 +9,7 @@ import { EditProductModal } from "./EditProductModal";
 import { DeleteProductModal } from "./DeleteProductModal";
 import { useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
+import ContactUs from "./ContactUs";
 
 const { Meta } = Card;
 
@@ -45,42 +46,55 @@ export const Product = () => {
     return (
       <div>
         <Header />
-        <div className="Title">Product Page</div>
+        <div className="Title">Our trusted contractor</div>
         {product && (
-          <Card
+          <div
             style={{
-              width: 300,
-              padding: "20px",
-              margin: "20px",
+              display: "flex",
+              justifyContent: "center",
             }}
-            cover={
-              <img
-                alt="example"
-                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-              />
-            }
-            actions={
-              product.userId === currentUser.user.id
-                ? [
-                    <DeleteOutlined key="delete" onClick={handleOpenDelete} />,
-                    <EditOutlined key="edit" onClick={handleOpen} />,
-                  ]
-                : []
-            }
           >
-            <p>{product.type}</p>
-            <Meta
-              avatar={
-                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
+            <Card
+              style={{
+                width: 600,
+                padding: "20px",
+                margin: "20px",
+              }}
+              cover={<img alt="example" src={product.productImage} />}
+              actions={
+                product.userId === currentUser.user.id
+                  ? [
+                      <DeleteOutlined
+                        key="delete"
+                        onClick={handleOpenDelete}
+                      />,
+                      <EditOutlined key="edit" onClick={handleOpen} />,
+                    ]
+                  : []
               }
-              title={product.name}
-              description={product.description}
-            />
-            <p>Price: {product.price}</p>
-            <p>Category: {product.category}</p>
-            <p>Created by: {product.userEmail}</p>
-          </Card>
-
+            >
+              <p>{product.type}</p>
+              <Meta
+                avatar={
+                  <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
+                }
+                title={product.name}
+                description={product.description}
+              />
+              <p>Price: {product.price}</p>
+              <p>Category: {product.category}</p>
+              <p>Created by: {product.userEmail}</p>
+            </Card>
+            <div style={{
+              width: "500px",
+              height: "500px",
+              margin: "20px",
+              backgroundColor: "#097969",
+              borderRadius: "10px",
+            }}>
+              <ContactUs />
+            </div>
+          </div>
         )}
         <EditProductModal
           open={open}
@@ -95,5 +109,4 @@ export const Product = () => {
       </div>
     );
   }
- 
 };

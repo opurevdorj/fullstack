@@ -4,6 +4,7 @@ import "./index.css";
 import { App } from "./App";
 import { UserContextProvider } from "./context/UserContext";
 import { ProductContextProvider } from "./context/ProductContext";
+import { ToastContainer } from "react-toastify";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -11,6 +12,7 @@ root.render(
     <UserContextProvider>
       <ProductContextProvider>
         <App />
+        <ToastContainer />
       </ProductContextProvider>
     </UserContextProvider>
   </React.StrictMode>

@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal } from "../../components/modal";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
+import { uploadImage } from "../../utils/utils";
+import { Image } from "antd";
 
 export const EditProductModal = (props) => {
   const { id } = useParams();
@@ -13,16 +15,23 @@ export const EditProductModal = (props) => {
     description: product.description,
     price: product.price,
     category: product.category,
+    productImage: product.productImage
   });
-
+const [newImageUrl, setNewImageUrl] = useState("")
   const { currentUser } = useUserContext();
   const { UPDATE_PRODUCT } = useProductContext();
 
   const handleInput = (e) => {
-    const { name, value } = e.target;
-    setInputValue({ ...inputValue, [name]: value });
+    const { name, value, } = e.target;
+    setInputValue({ ...inputValue, [name]: value, });
   };
-  console.log(handleInput);
+  console.log(inputValue);
+
+  const handleFileChange = async (e) => {
+    const imageUrl = await uploadImage(e.target.files[0]);
+    setNewImageUrl(imageUrl);
+    
+  };
 
   const handleCancelButton = () => {
     setInputValue({
@@ -30,6 +39,7 @@ export const EditProductModal = (props) => {
       description: product.description,
       price: product.price,
       category: product.category,
+     productImage: product.productImage
     });
     handleClose();
   };
@@ -40,6 +50,8 @@ export const EditProductModal = (props) => {
       description: inputValue.description,
       price: parseInt(inputValue.price),
       category: inputValue.category,
+      productImage: newImageUrl
+     
     };
     try {
       const response = await axios.put(
@@ -65,6 +77,16 @@ export const EditProductModal = (props) => {
       <Modal open={open} handleClose={handleClose}>
         <div style={{ color: "#097969;", fontSize: "20px" }}>Edit product</div>
         <div className="createInput">
+          <input
+            type="file"
+            name="productImage"
+            onChange={handleFileChange}
+          />
+          <Image
+          height="60px"
+          width="60px"
+          src={newImageUrl ? newImageUrl : product.productImage}
+          />
           <input
             className="editAndDeleteInput"
             onChange={handleInput}

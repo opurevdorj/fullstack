@@ -1,8 +1,9 @@
 .productPage {
     width: 100vw;
-  height: 100vh;
-    background: url('../../images/product-image.jpg') no-repeat center center fixed;
+  height: 100%;
+    background: url('../../images/products-background.jpg') no-repeat center center fixed;
     background-size: cover;
+   
 }
 
 .Title {
@@ -11,7 +12,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
+    font-size: 30px;
+    color: #097969;
+    margin-top: 10px;
+    font-weight: 300;
 }
 
 .createInput {

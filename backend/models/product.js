@@ -30,6 +30,10 @@ const productSchema = new mongoose.Schema({
         enum: ["public", "private"],
         required: [true, "Product type is required"]
     },
+    productImage: {
+        type: String,
+        
+    },
 },
 {
     timestamps: true,

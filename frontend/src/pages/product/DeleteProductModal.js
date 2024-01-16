@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
+import { toast } from "react-toastify";
 
 export const DeleteProductModal = (props) => {
   const { openDelete, handleCloseDelete, product } = props;
@@ -22,6 +23,10 @@ export const DeleteProductModal = (props) => {
       });
       const data = await response.data
       DELETE_PRODUCT(data._id)
+      toast("Successfully deleted", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+      });
       navigate("/products");
     } catch (err) {
       console.log(err);
@@ -34,7 +39,7 @@ export const DeleteProductModal = (props) => {
   return (
     <div>
       <Modal open={openDelete} handleClose={handleCloseDelete}>
-        <div style={{display: "flex", justifyContent: "center"}}>Are you sure you want to delete this product?</div>
+        <div style={{display: "flex", justifyContent: "center"}}>Are you sure you want to delete this {product.name} product?</div>
         <button className="cancelAndSaveButton" onClick={handleNoButton}>No</button>
         <button className="cancelAndSaveButton" onClick={handleYesButton}>Yes</button>
       </Modal>
