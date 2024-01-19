@@ -9,10 +9,10 @@ const createToken = (id) => {
 };
 
 const SignUpUser = async (req, res) => {
-  const { fullname, email, password } = req.body;
+  const { fullname, email, password, userImage } = req.body;
 
-  if (!email || !password || !fullname) {
-    res.status(400).send("Please enter your email and password");
+  if (!email || !password || !fullname || !userImage) {
+    res.status(400).send("Please enter your email, password, name and image");
     return;
   }
 
@@ -48,12 +48,14 @@ const SignUpUser = async (req, res) => {
       fullname,
       email,
       password: hashedPassword,
+      userImage,
+      
     });
 
     const token = createToken(newUser._id);
     res
       .status(200)
-      .json({ user: { id: newUser._id, email: newUser.email }, token });
+      .json({ user: { id: newUser._id, email: newUser.email, fullname: newUser.fullname, userImage: newUser.userImage }, token });
   } catch (err) {
     res.status(500).send(err.message);
     return;

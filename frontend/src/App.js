@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { SignIn } from "./pages/sign-in/SignIn";
 import { SignUp } from "./pages/sign-up/SignUp";
 import { useUserContext } from "./context/UserContext";
+import { Profile } from "./pages/profile";
 
 
 export const App = () => {
@@ -23,6 +24,10 @@ export const App = () => {
         <Route
           path="/note"
           element={currentUser ? <Note /> : <Navigate to="/sign-in" />}
+        />
+        <Route
+          path="/profile"
+          element={currentUser ? <Profile /> : <Navigate to="/sign-in" />}
         />
         <Route
           path="/products/:id"

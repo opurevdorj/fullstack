@@ -1,4 +1,5 @@
 module.exports = {
     ...require("./SignInUser"),
-    ...require("./SignUpUser")
+    ...require("./SignUpUser"),
+    ...require("./updateUser"),
 }

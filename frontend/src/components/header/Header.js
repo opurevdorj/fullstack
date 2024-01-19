@@ -36,7 +36,11 @@ export const Header = () => {
             Note
           </Link>
         </div>
-        <div className="Menus">{currentUser.user.email}</div>
+        <div >
+        <Link className="Menus" to="/profile">
+        {currentUser.user.email}
+        </Link>
+        </div>
         <div>
           <Link className="Menus" to="/" onClick={handleSignOut}>
             Sign Out

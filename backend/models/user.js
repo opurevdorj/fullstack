@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         minLength: 6,
         trim: true,
+    },
+    userImage: {
+        type: String,
+        required: [true, "User Image is required"],
+        
     }
 });
 

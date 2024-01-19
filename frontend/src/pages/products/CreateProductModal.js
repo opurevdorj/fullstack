@@ -71,15 +71,6 @@ export const CreateProductModal = (props) => {
     // console.log(URL.createObjectURL(e.target.files[0]));
   };
 
-  // const uploadImage = async () => {
-  //   console.log(file);
-  //   const storageRef = ref(storage, file.name);
-  //   const imageUrl = await uploadBytes(storageRef, file);
-  //   const downloadImageUrl = await getDownloadURL(storageRef);
-
-  //   return downloadImageUrl;
-  // };
-
   const handleSaveButton = async () => {
     try {
       if (file === undefined) {

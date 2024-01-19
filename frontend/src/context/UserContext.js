@@ -30,9 +30,20 @@ export const UserContextProvider = ({ children }) => {
     setCurrentUser(null);
   };
 
+  const UPDATE_USER = async (updatedUser) => {
+    setCurrentUser(updatedUser);
+  };
+
   return (
     <UserContext.Provider
-      value={{ currentUser, userContextLoading, signUp, signIn, signOut }}
+      value={{
+        currentUser,
+        userContextLoading,
+        signUp,
+        signIn,
+        signOut,
+        UPDATE_USER,
+      }}
     >
       {children}
     </UserContext.Provider>

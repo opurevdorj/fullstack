@@ -62,7 +62,7 @@ export const Products = () => {
                 <p>{product.type}</p>
                 <Meta
                   avatar={
-                    <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
+                    <Avatar src={product.userImage} />
                   }
                   title={product.name}
                   description={product.description}

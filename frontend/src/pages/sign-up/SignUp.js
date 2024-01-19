@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useUserContext } from "../../context/UserContext";
+import { uploadImage } from "../../utils/utils";
 
 const validateForm = yup.object().shape({
   fullname: yup.string().min(4, "Must be more than 4 characters").required(),
@@ -16,6 +17,7 @@ const validateForm = yup.object().shape({
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
     ),
   confirmPassword: yup.string().required(),
+  userImage: yup.string().required(),
 });
 
 export const SignUp = () => {
@@ -24,6 +26,7 @@ export const SignUp = () => {
     navigate("/sign-in");
   };
   const { signUp } = useUserContext();
+  const [file, setFile] = useState();
 
   const [formValues, setFormValues] = useState({
     fullname: "",
@@ -57,9 +60,19 @@ export const SignUp = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+    // console.log(URL.createObjectURL(e.target.files[0]));
+  };
+
   const handleSignUp = async (e) => {
     try {
-      if (formValues.password !== formValues.confirmPassword) {
+      if (file === undefined) {
+        setFormErrors({
+          ...formErrors,
+          userImage: "Must add file",
+        });
+      } else if (formValues.password !== formValues.confirmPassword) {
         // checks if password matches with confirmPassword
         setFormErrors({
           ...formErrors,
@@ -85,9 +98,10 @@ export const SignUp = () => {
       ) {
         setFormErrors({ ...formErrors, required: "All error must be cleared" });
       } else {
+        const imageUrl = await uploadImage(file);
         const response = await axios.post(
           `http://localhost:8080/users/sign-up`,
-          formValues
+          {...formValues, userImage: imageUrl}
         );
         const data = await response.data;
 
@@ -100,6 +114,7 @@ export const SignUp = () => {
           email: "",
           password: "",
           confirmPassword: "",
+          userImage: "",
         });
         navigate("/");
       }
@@ -155,6 +170,15 @@ export const SignUp = () => {
             name="confirmPassword"
           />
           <div id="notification">{formErrors.confirmPassword}</div>
+          <div className="inputNames">User Image</div>
+          <input
+            type="file"
+            placeholder="Enter your image"
+            name="userImage"
+            onChange={handleFileChange}
+          />
+
+          <div id="notification">{formErrors.userImage}</div>
         </div>
 
         <div id="notification">{formErrors.required}</div>
@@ -171,7 +195,7 @@ export const SignUp = () => {
           </button>
         </div>
         <div>
-          <Link style={{ color: "#097969"}} to="/">
+          <Link style={{ color: "#097969" }} to="/">
             Back
           </Link>
         </div>

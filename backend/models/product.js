@@ -25,6 +25,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "Product userEmail is required"]
     },
+    userImage: {
+        type: String,
+        
+    },
     type: {
         type: String,
         enum: ["public", "private"],
