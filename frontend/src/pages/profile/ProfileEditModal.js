@@ -2,19 +2,23 @@ import React, { useState } from "react";
 import { Modal } from "../../components/modal";
 import axios from "axios";
 import { useUserContext } from "../../context/UserContext";
+import { uploadImage } from "../../utils/utils";
+import { Image } from "antd";
 
 export const ProfileEditModal = (props) => {
-  const { open, handleClose} = props;
+  const { open, handleClose } = props;
   const { currentUser } = useUserContext();
   const [inputValue, setInputValue] = useState({
     fullname: currentUser.user.fullname,
     email: currentUser.user.email,
     password: "",
-    newFullname: "",
-    newEmail: "",
+    newFullname: currentUser.user.fullname,
+    newEmail: currentUser.user.email,
     newPassword: "",
+    userImage: currentUser.user.userImage,
+    newUserImage: currentUser.user.userImage,
   });
-
+  const [newImageUrl, setNewImageUrl] = useState("");
   const { UPDATE_USER } = useUserContext();
 
   const handleInput = (e) => {
@@ -23,10 +27,21 @@ export const ProfileEditModal = (props) => {
   };
   console.log(inputValue);
 
+  const handleFileChange = async (e) => {
+    const imageUrl = await uploadImage(e.target.files[0]);
+    setNewImageUrl(imageUrl);
+  };
+
   const handleCancelButton = () => {
     setInputValue({
       fullname: currentUser.user.fullname,
       email: currentUser.user.email,
+      newFullname: currentUser.user.fullname,
+      newEmail: currentUser.user.email,
+      password: "",
+      newPassword: "",
+      userImage: currentUser.user.userImage,
+      newUserImage: currentUser.user.userImage,
     });
     handleClose();
   };
@@ -35,6 +50,12 @@ export const ProfileEditModal = (props) => {
     const updatedProfile = {
       fullname: inputValue.fullname,
       email: inputValue.email,
+      newFullname: inputValue.newFullname,
+      newEmail: inputValue.newEmail,
+      password: inputValue.password,
+      newPassword: inputValue.newPassword,
+      userImage: inputValue.userImage,
+      newUserImage: newImageUrl,
     };
     try {
       const response = await axios.put(
@@ -48,7 +69,16 @@ export const ProfileEditModal = (props) => {
       );
       const data = await response.data;
       UPDATE_USER(data);
-
+      setInputValue({
+        fullname: inputValue.fullname,
+        email: inputValue.email,
+        newFullname: inputValue.newFullname,
+        newEmail: inputValue.newEmail,
+        password: "",
+        newPassword: "",
+        userImage: inputValue.userImage,
+        newUserImage: newImageUrl,
+      });
       handleClose();
     } catch (error) {
       console.error(error);
@@ -63,16 +93,38 @@ export const ProfileEditModal = (props) => {
           <input
             className="editAndDeleteInput"
             onChange={handleInput}
-            name="fullname"
+            name="newFullname"
             type="text"
-            value={inputValue.fullname}
+            value={inputValue.newFullname}
           />
           <input
             className="editAndDeleteInput"
             onChange={handleInput}
-            name="email"
+            name="newEmail"
             type="text"
-            value={inputValue.email}
+            value={inputValue.newEmail}
+          />
+          <input
+            className="editAndDeleteInput"
+            onChange={handleInput}
+            name="password"
+            type="text"
+            placeholder="Enter your password"
+            value={inputValue.password}
+          />
+          <input
+            className="editAndDeleteInput"
+            onChange={handleInput}
+            name="newPassword"
+            type="text"
+            placeholder="Enter your new password"
+            value={inputValue.newPassword}
+          />
+          <input type="file" name="productImage" onChange={handleFileChange} />
+          <Image
+            height="60px"
+            width="60px"
+            src={newImageUrl ? newImageUrl : currentUser.user.userImage}
           />
         </div>
         <button className="cancelAndSaveButton" onClick={handleCancelButton}>

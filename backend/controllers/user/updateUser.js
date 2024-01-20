@@ -1,10 +1,24 @@
 const User = require("../../models/user");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const createToken = (id) => {
+  return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "1d"});
+
+};
 
 const updateUser = async (req, res) => {
-  const { fullname, email, password, userImage, newFullname, newEmail, newPassword, newUserImage} =
-    req.body;
+  const {
+    fullname,
+    email,
+    password,
+    userImage,
+    newFullname,
+    newEmail,
+    newPassword,
+    newUserImage,
+  } = req.body;
 
   // if (
   //   !fullname ||
@@ -51,13 +65,15 @@ const updateUser = async (req, res) => {
     user.userImage = newUserImage;
 
     const updatedUser = await user.save();
+    const token = createToken(user._id);
     res.status(200).json({
       user: {
         id: updatedUser._id,
         email: updatedUser.email,
         fullname: updatedUser.fullname,
-       userImage: updatedUser.userImage
+        userImage: updatedUser.userImage,
       },
+      token,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });

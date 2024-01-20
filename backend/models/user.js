@@ -22,7 +22,6 @@ const userSchema = new mongoose.Schema({
     },
     userImage: {
         type: String,
-        required: [true, "User Image is required"],
         
     }
 });

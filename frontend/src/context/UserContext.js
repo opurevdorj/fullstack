@@ -31,6 +31,7 @@ export const UserContextProvider = ({ children }) => {
   };
 
   const UPDATE_USER = async (updatedUser) => {
+    localStorage.setItem("user", JSON.stringify(updatedUser));
     setCurrentUser(updatedUser);
   };
 

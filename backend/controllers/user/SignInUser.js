@@ -28,7 +28,7 @@ const SignInUser = async (req, res) => {
     return;
   }
   const token = createToken(user._id)
-  res.status(200).json({ user: { id: user._id, email: user.email }, token });
+  res.status(200).json({ user: { id: user._id, email: user.email, fullname: user.fullname, userImage: user.userImage }, token });
 };
 
 module.exports = { SignInUser };
