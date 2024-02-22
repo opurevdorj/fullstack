@@ -19,7 +19,7 @@ console.log(currentUser)
         try {
           const response = await axios.get(
             // "http://localhost:8080/products", 
-            "https://fullstack-backend-5gvr.onrender.com/products",
+            "https://fullstack-jk6q.onrender.com/products",
             {
             headers: {
               Authorization: `Bearer ${token}`,

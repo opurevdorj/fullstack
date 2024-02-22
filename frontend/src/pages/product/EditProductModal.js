@@ -56,7 +56,7 @@ const [newImageUrl, setNewImageUrl] = useState("")
     try {
       const response = await axios.put(
         // `http://localhost:8080/products/${id}`,
-        `https://fullstack-backend-5gvr.onrender.com/products/${id}`,
+        `https://fullstack-jk6q.onrender.com/products/${id}`,
         updatedProduct,
         {
           headers: {

@@ -101,7 +101,7 @@ export const CreateProductModal = (props) => {
         const imageUrl = await uploadImage(file);
         const response = await axios.post(
           // `http://localhost:8080/products`,
-          `https://fullstack-backend-5gvr.onrender.com/products`,
+          `https://fullstack-jk6q.onrender.com/products`,
           { ...formValues, productImage: imageUrl },
           {
             headers: {
