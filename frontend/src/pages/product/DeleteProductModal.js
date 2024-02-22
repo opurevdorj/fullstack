@@ -12,17 +12,21 @@ export const DeleteProductModal = (props) => {
   const navigate = useNavigate();
 
   const { currentUser } = useUserContext();
-  const {DELETE_PRODUCT} = useProductContext();
+  const { DELETE_PRODUCT } = useProductContext();
 
   const handleYesButton = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8080/products/${id}`, {
-        headers: {
-          Authorization: `Bearer ${currentUser.token}`,
-        },
-      });
-      const data = await response.data
-      DELETE_PRODUCT(data._id)
+      const response = await axios.delete(
+        // `http://localhost:8080/products/${id}`,
+        `https://fullstack-backend-5gvr.onrender.com/products/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        }
+      );
+      const data = await response.data;
+      DELETE_PRODUCT(data._id);
       toast("Successfully deleted", {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 3000,
@@ -39,9 +43,15 @@ export const DeleteProductModal = (props) => {
   return (
     <div>
       <Modal open={openDelete} handleClose={handleCloseDelete}>
-        <div style={{display: "flex", justifyContent: "center"}}>Are you sure you want to delete this {product.name} product?</div>
-        <button className="cancelAndSaveButton" onClick={handleNoButton}>No</button>
-        <button className="cancelAndSaveButton" onClick={handleYesButton}>Yes</button>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          Are you sure you want to delete this {product.name} product?
+        </div>
+        <button className="cancelAndSaveButton" onClick={handleNoButton}>
+          No
+        </button>
+        <button className="cancelAndSaveButton" onClick={handleYesButton}>
+          Yes
+        </button>
       </Modal>
     </div>
   );

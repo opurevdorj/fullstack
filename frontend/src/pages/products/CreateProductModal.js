@@ -5,8 +5,6 @@ import axios from "axios";
 import { UserContext, useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
 import { Radio } from "antd";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../../components/firebase/myfirebase";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { uploadImage } from "../../utils/utils";
@@ -102,7 +100,8 @@ export const CreateProductModal = (props) => {
       } else {
         const imageUrl = await uploadImage(file);
         const response = await axios.post(
-          `http://localhost:8080/products`,
+          // `http://localhost:8080/products`,
+          `https://fullstack-backend-5gvr.onrender.com/products`,
           { ...formValues, productImage: imageUrl },
           {
             headers: {

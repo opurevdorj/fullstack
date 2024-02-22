@@ -18,7 +18,8 @@ console.log(currentUser)
       const fetchProducts = async () => {
         try {
           const response = await axios.get(
-            "http://localhost:8080/products", 
+            // "http://localhost:8080/products", 
+            "https://fullstack-backend-5gvr.onrender.com/products",
             {
             headers: {
               Authorization: `Bearer ${token}`,

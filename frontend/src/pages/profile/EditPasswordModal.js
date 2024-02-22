@@ -38,7 +38,8 @@ export const EditPasswordModal = (props) => {
     };
     try {
       const response = await axios.put(
-        `http://localhost:8080/users/profile`,
+        // `http://localhost:8080/users/profile`,
+        `https://fullstack-backend-5gvr.onrender.com/users/profile`,
         updatedProfile,
         {
           headers: {

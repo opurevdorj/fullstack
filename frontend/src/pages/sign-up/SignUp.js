@@ -100,7 +100,8 @@ export const SignUp = () => {
       } else {
         const imageUrl = await uploadImage(file);
         const response = await axios.post(
-          `http://localhost:8080/users/sign-up`,
+          // `http://localhost:8080/users/sign-up`,
+          `https://fullstack-backend-5gvr.onrender.com/users/sign-up`,
           {...formValues, userImage: imageUrl}
         );
         const data = await response.data;
